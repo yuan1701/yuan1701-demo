@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>3D旋转</title>
+    <style>
+        * { margin: 0;padding: 0;}
+        body{background: black;perspective: 1000px; /* 景深 */}
+        #heard{
+            width: 300px;
+            height: 600px;
+            transform-style: preserve-3d;
+            margin: 100px auto;
+            transform: rotateX(20deg) rotateY(0deg) rotateZ(50deg);
+            animation: mymove 10s infinite linear; 
+            /* animation: 动画名称 执行一次的时间 执行的次数  运动的方式; */
+        }
+        #heard div.header{
+            position: absolute;
+            left: 0;
+            width: 300px ;
+            height: 600px;
+            border-left: 0;
+            border-bottom: 0;
+            border-radius: 50% 50% 0/40% 50% 0;
+        }
+        #cube{
+            position: absolute;
+            left: 0;
+            top: 0;;
+            width: 200px;
+            height: 200px;
+            transform-origin: 50% 50% -100px;
+            transform-style: preserve-3d;
+            transition: 2s;
+            transform: translateX(60px) translateY(300px) translateZ(60px)
+        }
+        #cube>div{
+            width: 100%;
+            height: 100%;
+            border: 1px solid #000;
+            background: black;
+            position: absolute;
+            transition: transform 0.3s ease-in;
+        }
+        #cube div.out-front{
+            transform: translateZ(100px)
+        }
+        #cube div.out-back{
+            transform: translateZ(-100px) rotateY(180deg)
+        }
+        #cube div.out-left{
+            transform: translateX(-100px) rotateY(-90deg)
+        }
+        #cube div.out-right{
+            transform: translateX(100px) rotateY(90deg)
+        }
+        #cube div.out-top{
+            transform: translateY(-100px) rotateX(90deg)
+        }
+        #cube div.out-bottom{
+            transform: translateY(100px) rotateX(-90deg)
+        }
+        @keyframes mymove{
+            0%{
+                transform: rotateX(20deg) rotateY(0deg) rotateZ(50deg);
+            }
+            50%{
+                transform: rotateX(87deg) rotateY(-58deg) rotateZ(50deg) 
+             }
+             100%{
+                transform: rotateX(120deg) rotateY(140deg) rotateZ(50deg);
+            }
+
+        }
+    </style>
+</head>
+<body>
+    <div id="heard">
+        <div id="cube">
+            <div class="out-front"><img src="images/1.png" alt=""></div>
+            <div class="out-back"><img src="images/2.png" alt=""></div>
+            <div class="out-left"><img src="images/3.png" alt=""></div>
+            <div class="out-right"><img src="images/4.png" alt=""></div>
+            <div class="out-top"><img src="images/5.png" alt=""></div>
+            <div class="out-bottom"><img src="images/6.png" alt=""></div>
+        </div>
+    </div>
+    <script>
+        var header = document.getElementById("heard");
+        for(var i = 0 ;i < 36;i++){
+            var cdiv = document.createElement("div");
+            cdiv.className = "header";
+            cdiv.style.border = '2px solid #e4393c';
+            cdiv.style.borderLeft = '0';
+            cdiv.style.borderBottom = '0';
+            cdiv.style.transform = 'rotateY(' + i*10 +'deg) rotateZ(45deg) translateX(150px)';
+            header.appendChild(cdiv)
+        }
+    
+    </script>
+</body>
+
+</html>
