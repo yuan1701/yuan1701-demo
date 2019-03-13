@@ -85,14 +85,15 @@
             sheepRun: function (sheepPlus) {
                 var sheepAnimate = setInterval(function () {
                     sheepPlus.backNum = sheepPlus.backNum + 164;
-                    if (sheepPlus.backNum >= 1332) {
+                    if (sheepPlus.backNum == 1312) {
                         sheepPlus.backNum = 0;
                     }
                     console.log(sheepPlus.backNum)
                     sheepPlus.sheep.style.backgroundPosition = -sheepPlus.backNum + 'px ' + sheepPlus.top + 'px';
                     var cot = sheepPlus.sheep.offsetLeft - sheepPlus.speed;
+                    console.log(cot,'left')
                     sheepPlus.sheep.style.left = cot + 'px'
-                    if (cot < -164) {
+                    if (cot <= -164) {
                         console.log('remove')
                         clearInterval(sheepPlus.sheepAnimate);
                         sheepPlus.stage.removeChild(sheepPlus.sheep)
@@ -109,22 +110,22 @@
                     sheepPlus.y = e.pageY;
 
                 }
-                // document.onmousemove = function (e) {
-                //     var chaX = e.pageX - sheepPlus.x;
-                //     var chaY = e.pageY - sheepPlus.y;
-                //     sheepPlus.sheep.style.left = chaX + sheepPlus.sheep.offsetLeft + 'px';
-                //     sheepPlus.sheep.style.top = chaX + sheepPlus.sheep.offsetTop + 'px';
+                document.onmousemove = function (e) {
+                    var chaX = e.pageX - sheepPlus.x;
+                    var chaY = e.pageY - sheepPlus.y;
+                    sheepPlus.sheep.style.left = chaX + sheepPlus.sheep.offsetLeft + 'px';
+                    sheepPlus.sheep.style.top = chaX + sheepPlus.sheep.offsetTop + 'px';
 
-                //     sheepPlus.x = e.pageX;
-                //     sheepPlus.y = e.pageY;
+                    sheepPlus.x = e.pageX;
+                    sheepPlus.y = e.pageY;
 
-                // }
-                // document.onmouseup = function () {
-                //     document.onmousemove = null;
-                //     sheepPlus.top = 0;
-                //     sheepPlus.speed = sheepPlus.currentSpeed;
+                }
+                document.onmouseup = function () {
+                    document.onmousemove = null;
+                    sheepPlus.top = 0;
+                    sheepPlus.speed = sheepPlus.currentSpeed;
 
-                // }
+                }
             }
 
 
