@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0
+        }
+
+        body,
+        html {
+            /*2.背景色铺满窗口*/
+            width: 100%;
+            height: 100%;
+        }
+
+        .stage {
+            /* position: absolute;//2.背景色铺满窗口 */
+            width: 100%;
+            height: 100%;
+            background: #39f;
+            overflow: hidden;
+        }
+
+        .sheep {
+            position: absolute;
+            width: 164px;
+            height: 122px;
+            background-image: url(../images/sheep.png);
+            background-position: 0 0;
+            background-repeat: no-repeat;
+            right: 0px;
+            bottom: 0;
+            cursor: -webkit-grabbing;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="stage"></div>
+    <script>
+        var sheeps = {
+            sPars: {
+                frequency: 21000,//频率
+                backNum: 0,//背景图片位置
+                speed: 7,//速度
+                stage: document.getElementsByClassName('stage')[0],
+                maxSheep: 1
+
+            },
+            init: function () {
+                this.creatSheep()
+            },
+            creatSheep: function () {
+
+                function SheepClass(data) {
+                    this.sheep = document.createElement('div');
+                    data.stage.appendChild(this.sheep);
+                    this.sheep.className = 'sheep';
+                    this.frequency = Math.floor(Math.random() * data.frequency) + 30;
+                    this.backNum = data.backNum;
+                    this.speed = data.speed;
+                    this.stage = data.stage;
+                    this.top = 0;
+                    this.currentSpeed = data.speed;
+
+                }
+                var _this = this;//  this指向
+                var timer = setInterval(function () {
+ 
+                    var sheepNum = _this.sPars.stage.children.length;
+                    if (sheepNum <= _this.sPars.maxSheep) {
+                        var sheepPlus = new SheepClass(_this.sPars)
+                        // console.log(sheepPlus)
+                        _this.sheepRun(sheepPlus)
+                    }
+                }, 2000)
+
+            },
+            sheepRun: function (sheepPlus) {
+                var sheepAnimate = setInterval(function () {
+                    sheepPlus.backNum = sheepPlus.backNum + 164;
+                    if (sheepPlus.backNum >= 1332) {
+                        sheepPlus.backNum = 0;
+                    }
+                    console.log(sheepPlus.backNum)
+                    sheepPlus.sheep.style.backgroundPosition = -sheepPlus.backNum + 'px ' + sheepPlus.top + 'px';
+                    var cot = sheepPlus.sheep.offsetLeft - sheepPlus.speed;
+                    sheepPlus.sheep.style.left = cot + 'px'
+                    if (cot < -164) {
+                        console.log('remove')
+                        clearInterval(sheepPlus.sheepAnimate);
+                        sheepPlus.stage.removeChild(sheepPlus.sheep)
+                    }
+                }, sheepPlus.frequency)
+
+                // 小样拖拽
+                sheepPlus.sheep.onmousedown = function (e) {
+                    e = e || window.event
+                    sheepPlus.top = -128;
+                    sheepPlus.speed = 0;
+
+                    sheepPlus.x = e.pageX;
+                    sheepPlus.y = e.pageY;
+
+                }
+                // document.onmousemove = function (e) {
+                //     var chaX = e.pageX - sheepPlus.x;
+                //     var chaY = e.pageY - sheepPlus.y;
+                //     sheepPlus.sheep.style.left = chaX + sheepPlus.sheep.offsetLeft + 'px';
+                //     sheepPlus.sheep.style.top = chaX + sheepPlus.sheep.offsetTop + 'px';
+
+                //     sheepPlus.x = e.pageX;
+                //     sheepPlus.y = e.pageY;
+
+                // }
+                // document.onmouseup = function () {
+                //     document.onmousemove = null;
+                //     sheepPlus.top = 0;
+                //     sheepPlus.speed = sheepPlus.currentSpeed;
+
+                // }
+            }
+
+
+        }
+        sheeps.init()
+
+
+    </script>
+</body>
+
+</html>
