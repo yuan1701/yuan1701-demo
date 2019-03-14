@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    .block {
+        position: relative;
+        width: 400px;
+        height: 650px;
+        background: #000;
+        margin: 0px auto
+    }
+
+    .board {
+        position: absolute;
+        width: 80px;
+        height: 4px;
+        background: #fff;
+        left: 150px;
+        bottom: 20px;
+        cursor: pointer;
+    }
+
+    .square {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        box-sizing: border-box;
+        border-top: 1px solid #fff;
+        border-right: 1px solid #ffffff;
+
+    }
+
+    .ball {
+        position: absolute;
+        width: 4px;
+        height: 4px;
+        background: red;
+        border-radius: 50%
+    }
+</style>
+
+<body>
+    <div class="block" id="block">
+        <div class="board" id="board"></div>
+    </div>
+
+
+    <script>
+        var maxRow = 40, maxCol = 40;
+        // 存放数组颜色
+        var color = ['#f5959d', '#a4b9ee', '#eea4ed', '#f4c190', '#a4d2ee', '#d7baff'];
+        // 数组存放小砖块 列*行  颜色
+        var area = [
+            { minY: 3, maxY: 12, minX: 2, maxX: 19, color: color[0] },
+            { minY: 15, maxY: 24, minX: 2, maxX: 19, color: color[1] },
+            { minY: 27, maxY: 36, minX: 2, maxX: 19, color: color[2] },
+            { minY: 3, maxY: 12, minX: 22, maxX: 39, color: color[3] },
+            { minY: 15, maxY: 24, minX: 22, maxX: 39, color: color[4] },
+            { minY: 27, maxY: 36, minX: 22, maxX: 39, color: color[5] },
+        ];
+        var game = document.getElementById('block');
+        var board = document.getElementById('board');
+        //数组存放小砖块
+        var squareSet = [];
+        var ball;//小球
+        var score = 0//分数
+
+        init();
+        function init() {
+            for (var i = 0; i < maxRow; i++) {
+                squareSet[i] = [];
+                for (var j = 0; j < maxCol; j++) {
+                    var result = needCreate(i, j);
+                    if (result == null) {
+                        squareSet[i][j] = null;
+                        continue;
+                    }
+                    var temp = createSquare(i, j, result);
+                    squareSet[i][j] = temp;
+                }
+            }
+
+            createBall();
+            drag();
+            run()
+
+        }
+        function needCreate(row, col) {
+            for (var i = 0; i < area.length; i++) {
+                if (row >= area[i].minX && row <= area[i].maxX && col >= area[i].minY && col <= area[i].maxY) {
+                    return area[i].color;
+                }
+            }
+            return null;
+        }
+        function createSquare(x, y, color) {
+            var temp = document.createElement('div');
+            temp.className = 'square';
+            temp.style.left = 10 * y + 'px'
+            temp.style.top = 10 * x + 'px';
+            temp.style.backgroundColor = color;
+            game.appendChild(temp);
+            return temp;
+
+        }
+        function createBall() {
+            var temp = document.createElement('div');
+            temp.className = 'ball';
+            temp.style.left = '100px'
+            temp.style.bottom = '100px';
+
+            temp.speedX = 1;
+            temp.speedY = -1;
+
+            game.appendChild(temp)
+        }
+        function drag() {
+            board.onmousedown = function (e) {
+                console.log(e)
+                var lastX = e.clientX;
+                document.onmousemove = function (e) {
+                    var disX = e.clientX - lastX;
+                    var location = board.offsetLeft + disX;
+                    if (location <= 0) {
+                        location = 0
+                    }
+                    if (location >= 320) {
+                        location = 320
+                    }
+                    board.style.left = location + 'px';
+
+
+                }
+                document.onmouseup = function (e) {
+                    document.onmousemove = null
+                }
+            }
+        }
+        function run() {//小球动起来
+            ball = document.getElementsByClassName('ball')[0];
+            timer = setInterval(function () {
+                ball.style.left = ball.offsetLeft + ball.speedX + 'px';
+                ball.style.top = ball.offsetTop + ball.speedY + 'px';
+                checkCrash();
+            }, 5)
+
+        }
+        function checkCrash() {//碰撞
+            if (ball.offsetLeft <= 0 || ball.offsetLeft >= 400) {
+                ball.speedX *= -1;
+            } else if (ball.offsetTop <= 0) {
+                ball.speedY *= -1;
+            } else if (ball.offsetLeft > board.offsetLeft && ball.offsetLeft < board.offsetLeft + 80 && ball.offsetTop >= board.offsetTop && ball.offsetTop <= board.offsetTop + 4) {
+                ball.speedY *= -1;
+
+            } else if (ball.offsetTop >= 650) {
+                clearInterval(timer)
+                alert("game over:" + score)
+            }
+
+
+            if (ball.offsetTop >= 390) {
+                // continue;
+                return ;
+            }
+            var col = Math.floor((ball.offsetLeft + 2) / 10)
+            var row = Math.floor((ball.offsetTop + 2) / 10)
+
+            if (squareSet[row][col]) {
+                disappear(row,col)
+            }
+        }
+
+        function disappear(x, y) {
+            game.removeChild(squareSet[x][y]);
+            console.log(x,y)
+            squareSet[x][y] = null;
+
+        }
+
+
+    </script>
+</body>
+
+</html>
