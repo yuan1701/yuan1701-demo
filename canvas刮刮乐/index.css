@@ -1,0 +1,16 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.prize{
+    position: absolute;
+    top: 0;
+    z-index: -1;
+    width: 300px;
+    height: 150px;
+    line-height: 150px;
+    font-size: 43px;
+    text-align: center;
+    background: #39f;
+    border: 1px solid #39f;
+}
