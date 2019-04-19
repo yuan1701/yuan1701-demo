@@ -1,0 +1,66 @@
+git使用：
+1.下载安装git 初始化仓库git init
+2.配置用户信息
+git config -global user.name "xxx"
+git config -global user.email "xxx@163.com"
+3.是否配置成功
+git config --list
+或者
+1.clone文件
+git clone git@code-sh.rnd.huawei.com:yWX547757/cpts_console_ui.git
+2.进入文件执行
+git remote  -v
+git remote add origin git@code-sh.rnd.huawei.com:Russell_I_V_Swift/cpts_console_ui.git
+git remote add yuanyun git@code-sh.rnd.huawei.com:yWX547757/cpts_console_ui.git
+
+[git remote rm origin]删除远端分支
+[git config user.name]查看用户名
+[git config user.email]查看用户地址
+
+3.刷新(获取不到远端分支)
+git fetch origin 
+4.查看分支
+git branch -a 
+5.列出详细信息，在每一个名字后面列出其远程url
+git remote -v
+6.基于xxx新建分支
+git checkout -b dev origin/dev
+7.将本地代码和源代码合并
+git pull
+8.拉远程代码
+git pull origin +分支
+9.提交的描述信息(-a指所有被修改的文件)(相当于编辑器的+ √)
+git commit -a -m "XXX"(添加文件到仓库 git add *    git commit -m "描述")
+10.查看仓库状态:git status
+11.代码上传
+git push yuanyun dev(push之前先pull)
+解决冲突的方法:
+    1.删除本地分支  git branch -D +本地分支
+    2.删除远端分支  git push yuanyun --delete +远端分支 
+    3.更新origin   git fetch origin 
+    4.创建分支      git checkout -b dev origin/dev
+回退版本：
+    回退一次：git reset --hard HEAD^ 
+    回退n次： git reset --hard +版本号
+
+1.如何用github做一个开源项目：xxx.github.io
+2.git工具：TortoiseGit-2.2.0.0-64bit.msi 和 TortoiseGit-LanguagePack-2.2.0.0-64bit-zh_CN
+3.配置ssh key:
+    第一步：控制台输入ssh-keygen -t rsa -C "youremail@exam--listple.com"生成id_rsa和id_rsa.pub将id_rsa.pub内容添加到ssh秘钥。
+    详见：https://www.aliyun.com/jiaocheng/386355.html
+    在github个人中心的设置setting界面，找到SSH and GPS keys菜单，或者直接访问https://github.com/setting/keys
+    页面中点击new ssh key，添加即可。
+
+git clone遇见问题：
+1.git 解决 unable to get local issuer certificate 问题
+$git config --global http.sslVerify false
+2.git重定向unable to update url base from redirection
+3.git连接超时443-timeout 查看“c:\windows\system32\drivers\etc\host”，注意这个文件一定是在系统盘，host文件代理Hosts文件主要作用是定义IP地址和主机名的映射关系，是一个映射IP地址和主机名的规定。当用户在浏览器中输入一个需要登录的网址时，系统会首先自动从Hosts文件中寻找对应的IP地址。
+
+
+
+
+/ 前端需要学习内容
+// html，css，js
+// jq，网络，h5，css3，es6，webpack4.0，git，小程序，
+// 设计模式，vue，vuex,vue源码，React，nodejs，Mongo DB数据库
