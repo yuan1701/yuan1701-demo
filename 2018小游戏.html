@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>2048</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        font-size: 0px;
+    }
+
+    #my2048 {
+        position: relative;
+        margin-left: auto;
+        margin-right: auto;
+        background: #bbada0;
+    }
+
+    #my2048 div {
+        position: absolute;
+        display: inline-block;
+        border: 0px;
+    }
+</style>
+
+<body>
+    <div id="my2048"></div>
+</body>
+<script>
+    var my2048;
+    var rows = 4;
+    var cols = 4;
+    var spacing = 12;
+    var squareWidth = 100;
+    var boardSet = [];//初始化的默认小方块
+    var squareSet = [];//存放带数字的小方块
+    var valueMap = [];//存放每个位置的数值
+    var colorMapping = { '0': '#ccc0b3', "2": "#eee4da", '4': "#ede0c8", "8": "#f2b179", '16': '#f59563', '32': '#f65e3b', '64': '#f65e3b', '128': '#edcf72', '256': "#edcc61", '512': "#9c0", '1024': "#3365a5", '2048': "#09c", '4096': "#a6bc", '8192': "#93c" }
+    var directionEnum = { left: { key: 'left' }, right: { key: 'left' }, up: { key: 'up' }, down: { key: 'down' } }
+    var isChange = true;
+    var lock = false;
+
+    function generateNullMap() {//5.生成空map
+        var newValueMap = [];
+        for (var i = 0; i < rows; i++) {
+            newValueMap[i] = [];
+            for (var j = 0; j < cols; j++) {
+                newValueMap[i][j] = null;
+            }
+        }
+        return newValueMap;
+    }
+    function getNewLocation(arr) {//8.获取到新的点位
+        if (arr.length == 0) {
+            return [];
+        }
+        var temp = [];
+        temp.push(arr[0]);
+        for (var i = 1; i < arr.length; i++) {
+            if (arr[i].num == temp[temp.length - 1].num && (!temp[temp.length - 1].nextSquare || temp[temp.length - 1].nextSquare == null)) {
+                temp[temp.length - 1].nextSquare = arr[i];
+                // console.log('数字重叠')
+            } else {
+                temp.push(arr[i])
+            }
+        }
+        return temp;
+    }
+
+    function analysisActions(direction) {//7。移动分析过程  9.移动动画
+        var newSquareSet = generateNullMap();
+
+        if (direction == directionEnum.left) {//向左
+            // console.log('left')
+            for (var i = 0; i < squareSet.length; i++) {
+                var temp = [];//每一行带数字的小方块
+                for (var j = 0; j < squareSet[i].length; j++) {
+                    if (squareSet[i][j] != null) {
+                        temp.push(squareSet[i][j]);
+                    }
+                }
+                temp = getNewLocation(temp);
+                for (var k = 0; k < newSquareSet[i].length; k++) {
+                    if (temp[k]) {
+                        newSquareSet[i][k] = temp[k]
+                    }
+                }
+            }
+
+        } else if (direction == directionEnum.right) {//向右移动
+            // console.log('right', newSquareSet)
+            for (var i = 0; i < squareSet.length; i++) {
+                var temp = [];//每一行带数字的小方块
+                for (var j = squareSet[i].length - 1; j >= 0; j--) {
+                    if (squareSet[i][j] != null) {
+                        temp.push(squareSet[i][j]);
+                    }
+                }
+                temp = getNewLocation(temp);
+                for (var k = newSquareSet[i].length - 1; k >= 0; k--) {
+                    if (temp[newSquareSet[i].length - 1 - k]) {
+                        newSquareSet[i][k] = temp[newSquareSet[i].length - 1 - k]
+                    }
+                }
+            }
+
+        } else if (direction == directionEnum.up) {//向up移动
+            // console.log('up', newSquareSet)
+            for (var j = 0; j < squareSet[0].length; j++) {
+                var temp = [];//每一行带数字的小方块
+                for (var i = 0; i < squareSet.length; i++) {
+                    if (squareSet[i][j] != null) {
+                        temp.push(squareSet[i][j]);
+                    }
+                }
+                temp = getNewLocation(temp);
+                for (var k = 0; k < newSquareSet.length; k++) {
+                    if (temp[k]) {
+                        newSquareSet[k][j] = temp[k]
+                    }
+                }
+            }
+        } else if (direction == directionEnum.down) {//向下移动
+            // console.log('down', newSquareSet)
+            for (var j = 0; j < squareSet[0].length; j++) {
+                var temp = [];//每一行带数字的小方块
+                for (var i = squareSet.length - 1; i >= 0; i--) {
+                    if (squareSet[i][j] != null) {
+                        temp.push(squareSet[i][j]);
+                    }
+                }
+                temp = getNewLocation(temp);
+                for (var k = newSquareSet.length - 1; k >= 0; k--) {
+                    if (temp[newSquareSet.length - 1 - k]) {
+                        newSquareSet[k][j] = temp[newSquareSet.length - 1 - k]
+                    }
+                }
+            }
+
+        }
+        // 动画
+        for (var i = 0; i < newSquareSet.length; i++) {
+            for (var j = 0; j < newSquareSet[i].length; j++) {
+                if (newSquareSet[i][j] == null) {
+                    continue;
+                }
+                console.log(direction.key, 'active')
+                newSquareSet[i][j].style.transition = direction.key + ' 0.3s';
+                newSquareSet[i][j].style.left = (j + 1) * spacing + j * squareWidth + 'px';
+                newSquareSet[i][j].style.top = (i + 1) * spacing + i * squareWidth + 'px';
+                if (newSquareSet[i][j].nextSquare) {
+                    console.log(newSquareSet[i][j].nextSquare, 000)
+                    newSquareSet[i][j].nextSquare.style.transition = direction.key + ' 0.3s';
+                    newSquareSet[i][j].nextSquare.style.left = (j + 1) * spacing + j * squareWidth + 'px';
+                    newSquareSet[i][j].nextSquare.style.top = (i + 1) * spacing + i * squareWidth + 'px';
+                }
+            }
+        }
+
+        return newSquareSet;
+
+
+    }
+    function refresh(newSquareSet) {
+        squareSet = generateNullMap();
+        var newValueMap = generateNullMap();
+        // console.log(newSquareSet, 'newSquareSet', squareSet, newValueMap);
+        for (var i = 0; i < rows; i++) {
+            for (var j = 0; j < cols; j++) {
+                if (newSquareSet[i][j]) {
+                    if (newSquareSet[i][j].nextSquare) {//存在重叠
+                        // newSquareSet[i][j].offsetLeft  有问题？
+                        var temp = creatSquare(newSquareSet[i][j].num * 2, newSquareSet[i][j].offsetLeft, newSquareSet[i][j].offsetTop, i, j)
+                        squareSet[i][j] = temp;
+                        my2048.appendChild(temp);
+                        my2048.removeChild(newSquareSet[i][j].nextSquare);
+                        my2048.removeChild(newSquareSet[i][j])
+
+                    } else {//不存在重叠
+                        // console.log(newSquareSet[i][j].offsetLeft,'不存在重叠')
+                        var temp = creatSquare(newSquareSet[i][j].num, newSquareSet[i][j].offsetLeft, newSquareSet[i][j].offsetTop, i, j)
+                        squareSet[i][j] = temp;
+                        my2048.appendChild(temp);
+                        my2048.removeChild(newSquareSet[i][j]);
+                    }
+                    if (valueMap[i][j] != squareSet[i][j].num) {
+                        isChange = true;
+                    }
+                    newValueMap[i][j] = squareSet[i][j].num;
+                } else {
+                    newSquareSet[i][j] = 0;
+                }
+
+            }
+        }
+
+    }
+    function isOver() {
+        for (var i = 0; i < rows; i++) {
+            for (var j = 0; j < cols; j++) {
+                if (!squareSet[i][j]) {
+                    return false;
+                }
+            }
+        }
+    }
+    function move(directions) {//6.移动
+        // 判断游戏时候结束
+        if (isOver()) {
+            alert('game over!')
+            return;
+        }
+
+        // 计算移动位置
+        var newSquareSet = analysisActions(directions);
+        // 重绘刷新
+        setTimeout(function () {
+            refresh(newSquareSet);
+            if (isChange) {
+                randGenerateSquare()
+            }
+            isChange = false;
+            lock = true;
+
+        }, 200)
+
+
+    }
+    function randSquareNum() {//3.随机生成小方块数字
+        return Math.random() > 0.5 ? 4 : 2;
+    }
+    function randGenerateSquare() {//4.随机生成小方块
+        for (; ;) {
+            var randRow = Math.floor(Math.random() * rows);
+            var randCol = Math.floor(Math.random() * cols)
+            if (valueMap[randRow][randCol] == 0) {
+                var temp = creatSquare(randSquareNum(), randCol * squareWidth + (randCol + 1) * spacing, randRow * squareWidth + (randRow + 1) * spacing, randRow, randCol);
+                valueMap[temp.row][temp.col] = temp.num;
+                squareSet[temp.row][temp.col] = temp;
+                my2048.appendChild(temp);
+                return true;
+            }
+        }
+    }
+    function creatSquare(value, left, top, row, col) {//2.生成小方块
+        var temp = document.createElement("div");
+        temp.style.width = squareWidth + 'px';
+        temp.style.height = squareWidth + 'px';
+        temp.style.left = left + 'px';
+        temp.style.top = top + 'px';
+        temp.style.background = colorMapping[value];
+        temp.style.lineHeight = squareWidth + 'px';
+        temp.style.textAlign = 'center';
+        temp.style.fontSize = 0.4 * squareWidth + 'px';
+        temp.num = value;
+        temp.row = row;
+        temp.col = col;
+        if (value > 0) {
+            temp.innerHTML = '' + value
+        }
+        return temp;
+    }
+    function initboard() {
+        my2048 = document.getElementById("my2048");
+        my2048.style.width = (rows + 1) * spacing + rows * squareWidth + 'px';
+        my2048.style.height = (cols + 1) * spacing + cols * squareWidth + 'px';
+    }
+    function init() {//1.初始化
+        // 初始化棋盘
+        initboard();
+        // 生成默认小方块
+        for (var i = 0; i < rows; i++) {
+            boardSet[i] = [];
+            squareSet[i] = [];
+            valueMap[i] = [];
+            for (var j = 0; j < cols; j++) {
+                valueMap[i][j] = [];
+                squareSet[i][j] = null;
+                boardSet[i][j] = creatSquare(0, (j + 1) * spacing + j * squareWidth, (i + 1) * spacing + i * squareWidth, i, j);
+                my2048.appendChild(boardSet[i][j])
+            }
+        }
+
+        // 随机生成带数字的小方块
+        randGenerateSquare();
+        randGenerateSquare();
+        // 添加键盘事件
+        document.onkeydown = function (event) {
+            var e = event || window.event || arguments.callee.caller.arguments[0];
+            switch (e.key) {
+                case 'ArrowUp':
+                    move(directionEnum.up);
+                    break;
+                case 'ArrowDown':
+                    move(directionEnum.down);
+                    break;
+                case 'ArrowLeft':
+                    move(directionEnum.left);
+                    break;
+                case 'ArrowRight':
+                    move(directionEnum.right);
+                    break;
+                    move();
+                    break;
+                default:
+                    break;
+            }
+        };
+    }
+
+    init();
+
+
+
+
+
+
+
+
+
+</script>
+
+</html>
