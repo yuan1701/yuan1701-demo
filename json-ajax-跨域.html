@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        /* json ajax 跨域
+        // json 是一种数据格式 不是一种编程语言 不只js有
+        // 与字面量区别：
+            1.key添加双引号，
+            2.末尾没有分好
+            3.同一个对象中不允许出现两个同名属性*/
+        // 序列化
+        JSON.stringify()//json对象转为json字符串
+        JSON.parse()
+        JSON.stringify(arr, ['name', 'age'])//过滤
+        // ajax 实现异步交互的方法
+        // 技术核心XMLHttpRequest对象（XHR）
+        $.ajax()
+        // 原生
+        var xmlhttp;
+        // 1.建立XMLHttpRequest对象
+        if (window.XMLHttpRequest) {
+            xmlhttp = new XMLHttpRequest();
+        } else { // ie6,ie5
+            xmlhttp = new ActiveXObject('Microfoft.HMLHTTP')
+        }
+        // 2.设置回调
+        xmlhttp.onreadysattechange = callback;
+        function callback() { }
+        // 3.与服务器建立连接  true为异步
+        xmlhttp.open('get', url, true)
+        // 4.send发送数据
+        xmlhttp.send(null)//如果为post就不为空
+        // 5.在回调函数中针对不同状态进行处理
+        if (xmlhttp.readyState == 4) { }
+        if (xmlhttp.status == 200) { }
+
+        // jquery中
+        $.ajax({
+            type:'get',
+            url:'',
+            async:'',//是否支持异步刷新
+            data:{},
+            dateType:"",
+            success:function(){},
+            error:function(){}
+        })
+
+
+
+
+
+/*         A、HTTP请求的4个·组成部分
+     a、HTTP请求方法或者动作(GET/POST)
+      b、正在请求的URL
+      c、请求头，包含客户环境信息、身份信息等
+      d、请求体（正文），包含客户提交的查询字符串信息、表单信息
+
+ 
+ B、POST和GET方法
+      GET:(1)用于信息获取
+                (2)使用URL传递参数
+                 (3)String<=2000个字符左右
+      POST:(1)用于修改服务器上的资源
+                  (2)String<=无穷大
+
+ 
+ C、一个HTTP响应由三个部分组成
+        a、一个数字和文字组成的转态码。作用：显示请求是否成功
+        b、响应头，包含服务器类型、日期、内容类型、长度等
+        c、响应体，即响应正文，字符串、HTML等
+
+ 
+ D、HTTP状态码由3个数字构成，其中首位数字定义了状态码的类型
+     1^^：信息类，表示收到web请求，正在进行处理中
+     2^^：成功，表示用户请求被正确接收、理解和处理，如200
+     3^^：重定向，表示请求未成功，客户必须采取动作
+     4^^：客户端错误，客户提交的信息有误，如400
+     found:意味着请求中所引用的文档不存在
+    5^^：服务器错误（最难处理的问题）,表示服务器不能完成请求处理，如500*/
+
+
+    </script>
+
+</body>
+
+</html>
