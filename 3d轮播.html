@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./jquery-3.3.1/jquery-3.3.1.min.js"></script>
+
+    <style>
+        * {
+            margin: 0px;
+            padding: 0px;
+            font-size: 0;
+        }
+
+        .wrapper {
+            position: relative;
+            height: 200px;
+            margin-top: 150px;
+            transform-style: preserve-3d;
+            perspective: 800px
+        }
+
+        .wrapper img {
+            position: absolute;
+            width: 300px;
+            height: 200px;
+            border-radius: 10px;
+            left: 50%;
+            margin-left: -150px;
+            transition: transform 0.5s ease-in-out
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 作用域精解
+    [[scope]]:每个js函数都是一个对象，有些可以访问，
+    有些不能访问，这些属性仅提供js引擎存取，[[scope]]就是其中一个
+    [[scope]]指的是我们所说的作用域，存取了运行期上下文集合。
+    作用域链：
+-->
+    <div class="wrapper">
+        <img src="./images/1.jpg" alt="">
+        <img src="./images/2.jpg" alt="">
+        <img src="./images/3.jpg" alt="">
+        <img src="./images/4.jpg" alt="">
+        <img src="./images/5.jpg" alt="">
+    </div>
+    <script>
+        var imgLen = $('img').length;
+        var curDisplay = 0;
+        var flag = true;
+        var timer;
+        function init() {
+            show();
+            bindEvent();
+        }
+        init();
+        // 平移旋转
+        function show() {
+            var lNum, rNum, hLen = Math.floor(imgLen / 2);
+            for (var i = 0; i < hLen; i++) {
+                // 左侧图片
+                lNum = curDisplay - i - 1;
+                $('img').eq(lNum).css({
+                    transform: 'translateX(' + (-150 * (i + 1)) + 'px) translateZ(' + (200 - i * 100) + 'px) rotateY(30deg)'
+                })
+                // 右侧图片
+                rNum = curDisplay + i + 1;
+                if (rNum > imgLen - 1) {
+                    rNum -= imgLen;
+                }
+                $('img').eq(rNum).css({
+                    transform: 'translateX(' + (150 * (i + 1)) + 'px) translateZ(' + (100 - i * 100) + 'px)'
+                })
+                $('img').on('transitionend', function () {
+                    flag = true;
+                })
+            }
+            $('img').eq(curDisplay).css('transform', 'translateZ(200px)')
+        }
+
+        function bindEvent() {
+            $('img').click(function () {
+                if (flag) {
+                    flag = false;
+                    curDisplay = $(this).index();
+                    show();
+                }
+            }).mouseover(function () {
+                clearInterval(timer)
+            }).mouseout(function () {
+                timer = setInterval(play(), 2000)
+            })
+            timer = setInterval(play(), 2000)
+        }
+        function play() {
+            if (curDisplay == imgLen - 1) {
+                curDisplay = 0;
+            } else {
+                curDisplay++;
+            }
+            show();
+        }
+
+    </script>
+
+
+
+</body>
+
+</html>
