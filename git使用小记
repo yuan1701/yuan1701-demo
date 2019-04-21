@@ -1,17 +1,18 @@
 git使用：
-1.下载安装git 初始化仓库git init
-2.配置用户信息
-git config -global user.name "xxx"
-git config -global user.email "xxx@163.com"
-3.是否配置成功
-git config --list
-或者
+0.git init初始化一个仓库
 1.clone文件
-git clone git@code-sh.rnd.huawei.com:yWX547757/cpts_console_ui.git
+git clone git@xxx.git
 2.进入文件执行
 git remote  -v
-git remote add origin git@code-sh.rnd.huawei.com:Russell_I_V_Swift/cpts_console_ui.git
-git remote add yuanyun git@code-sh.rnd.huawei.com:yWX547757/cpts_console_ui.git
+git remote add origin git@xxx.git
+git remote add yuanyun git@xxx.git
+
+
+配置用户信息
+git config -global user.name "xxx"
+git config -global user.email "xxx@163.com"
+查看是否配置成功
+git config --list
 
 [git remote rm origin]删除远端分支
 [git config user.name]查看用户名
@@ -56,6 +57,7 @@ git clone遇见问题：
 $git config --global http.sslVerify false
 2.git重定向unable to update url base from redirection
 3.git连接超时443-timeout 查看“c:\windows\system32\drivers\etc\host”，注意这个文件一定是在系统盘，host文件代理Hosts文件主要作用是定义IP地址和主机名的映射关系，是一个映射IP地址和主机名的规定。当用户在浏览器中输入一个需要登录的网址时，系统会首先自动从Hosts文件中寻找对应的IP地址。
+1.下载安装git 初始化仓库git init
 
 
 
