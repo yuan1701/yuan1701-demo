@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>谁去拿外卖</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0
+        }
+
+        .aaa {
+            width: 700px;
+            height: 200px;
+            margin: 100px auto;
+            border-top: 2px solid #39f;
+            position: relative;
+
+        }
+
+        .takeout {
+            width: 186px;
+            height: 55px;
+            position: absolute;
+            top: -48px;
+            right: 0px;
+        }
+
+        .mask {
+            position: fixed;
+            left: 0px;
+            top: 0px;
+            width: 100%;
+            height: 100%;
+            /* opacity: 0.5; */
+            background: rgb(0, 0, 0);
+            z-index: 1;
+        }
+
+        .tackoutcontent {
+            position: fixed;
+            top: 5px;
+            left: 217px;
+            width: 360px;
+            height: 508px;
+            margin: 50px auto;
+            background: #fff;
+            border: 1px solid #ccc;
+            z-index: 2;
+        }
+
+        .tackoutcontent .head {
+            height: 50px;
+            line-height: 50px;
+            padding: 0 10px;
+            border-bottom: 2px solid;
+            font-size: 16px;
+        }
+
+        .tackoutcontent .content {
+            position: relative;
+            margin: 0 auto 10px;
+            padding-top: 15px;
+            width: 300px;
+            color: #555;
+            box-shadow: 1px 1px 2px #ddd;
+            background-color: #dbf0fa;
+        }
+
+        .tackoutcontent .content .fetchtakeout-badge {
+            display: block;
+            width: 186px;
+            height: 188px;
+            margin: 0 auto;
+            background: url(images/fetch-takeout.png) 0 -120px no-repeat;
+        }
+
+        .tackoutcontent .content .fetchtakeout-button {
+            display: block;
+            cursor: pointer;
+            margin: -45px auto 15px;
+            width: 271px;
+            height: 40px;
+            border: 0;
+            background: url(images/fetch-takeout.png) 0 0 no-repeat;
+        }
+
+        .tackoutcontent .content .fetchtakeout-rules {
+            position: relative;
+            margin-bottom: 10px;
+            text-align: center;
+            color: #777;
+            background: #dbf0fa;
+            overflow: hidden;
+            font-size: 12px;
+        }
+
+        .tackoutcontent .content .fetchtakeout-rules::after,
+        .tackoutcontent .content .fetchtakeout-rules::before {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 5px;
+            display: block;
+            height: 7px;
+            width: 40px;
+            background-color: #ccc;
+
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="aaa">
+        <img class="takeout" src="./images/takeout.png" alt="">
+    </div>
+
+
+    <div class="tackoutcontent">
+        <div class="head">
+            <span>谁去拿外卖</span>
+            <a class="close" style="float:right" href="JavaScript:">X</a>
+        </div>
+        <div class="content">
+            <h2 class="fetchtakeout-badge"></h2>
+            <button class="fetchtakeout-button"></button>
+            <div class="fetchtakeout-rules">随机到最小数字的人去拿外卖</div>
+
+        </div>
+    </div>
+
+
+</body>
+
+</html>

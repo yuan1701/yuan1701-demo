@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    #banner{
+        width: 500px;
+        height: 300px;
+        /* border: 1px solid #39f; */
+        /* outline外边框不占据空间 */
+        outline: 1px solid #39f;
+        margin: 0 auto;
+    }
+    </style>
+</head>
+<body>
+    <div id="banner"></div>
+    <script src="./index.js"></script>
+    <script>
+        var bannerDiv = document.getElementById('banner')
+        createBannerArea(bannerDiv,[
+            {imgUrl:'./images/1.png',link:'http://baidu.com'},
+            {imgUrl:'./images/2.png',link:'http://baidu.com'},
+            {imgUrl:'./images/3.png',link:'http://baidu.com'},
+        ])
+    </script>
+</body>
+</html>

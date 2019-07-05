@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>数据类型</title>
+</head>
+<body>
+    <!-- 显式类型转换 -->
+    <!--  JS中有6种数据类型：Undefined、Null、Boolean、Number、String和Object -->
+    <script>
+        Number(undefined)  //nan
+        Number(null)     //0
+
+        Number(true)     //1
+        Number(false)     //0
+
+        Number('')   //0
+        Number(' ')   //0
+
+        Number('12')   //12
+        Number('012')   //12
+        Number('0xff90')   //65424
+        Number('5e5')  //500000
+        Number('k')  //NaN
+
+        Number({})  //NaN
+        Number([])  //0
+        Number(function(){}) //NaN
+        Number([''])  //0
+        Number([2])   //2
+        Number(['2'])   //2
+
+        // Number转对象，统统转为nan，空数组转为0 ，有一个数据转为数字，其他都为nan
+
+
+        String(null) //'null'  
+        String([1,[2]])  
+        String(function(){})
+        String({})   //[object object]
+
+
+
+
+        // 转为布尔值
+        Boolean('') //false
+        Boolean(' ') //true
+
+
+
+
+
+        // 三个方法参数为对象的调用原理
+        //  valueOf返回对象对应的原始值  toString返回对象的字符串表现形式
+
+        /* 隐式类型转换
+        1.  +  -  *  /   %
+        2.+ -
+        3.某些比较运算符
+        
+        */
+
+
+
+
+
+    
+    
+    </script>
+    
+</body>
+</html>

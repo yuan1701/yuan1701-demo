@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            /* 色调（0-256），,饱和度,亮度 */
+            background: hsl(194, 66%, 49%)
+        }
+
+        .wrapper {
+            position: relative;
+            width: 70%;
+            height: 100%;
+            margin: 0 auto;
+            border: 1px solid #000;
+        }
+
+        .wrapper .title {
+            position: absolute;
+            color: #fff;
+            top: 100px;
+            font-size: 20px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .wrapper .per {
+            position: absolute;
+            color: #fff;
+            top: 120px;
+            font-size: 20px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .wrapper .circle {
+            position: absolute;
+            width: 20%;
+            /* 以父级的width */
+            padding-top: 20%;
+            /* border: 1px solid #000; */
+            border-radius: 50%;
+            top: 30%;
+            left: 30%;
+        }
+
+        .wrapper .circle.sun {
+            background-color: #ffff77;
+            box-shadow: 0 0 50px #ffff77;
+        }
+
+        .wrapper .circle.moon {
+            left: 52%;
+            box-shadow: inset 0 0 50px #ffff77;
+            cursor: pointer;
+
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="wrapper">
+        <audio src="https://music.163.com/outchain/player?type=2&id=31134193" preload="auto"></audio>
+        <div class="title">拓东调节音量</div>
+        <div class="per">Volum:</div>
+        <div class="circle sun"></div>
+        <div class="circle moon"></div>
+    </div>
+
+
+    <script>
+        var obj = {
+            init: function () {
+                // this;
+                this.moon = document.getElementsByClassName('moon')[0];
+                this.sun = document.getElementsByClassName('sun')[0];
+                this.body = document.getElementsByTagName('body')[0];
+                this.bindEvent()
+
+            },
+            bindEvent: function () {//拖拽
+                var moon = this.moon;
+                var body = this.body
+                var dis;
+                var flag = false;
+                var self = this;
+                moon.onmousedown = function (e) {
+                    console.log(e.clientX);
+                    flag = true;
+                    dis = e.clientX - moon.offsetLeft;
+
+                }
+                body.onmousemove = function (e) {
+                    if (!flag) { return }
+                    moon.style.left = e.clientX - dis + 'px';
+                    self.getPer()
+
+                }
+                body.onmouseup = function (e) {
+                    flag = false
+                }
+
+            },
+            getPer: function () {
+                var self = this;
+                var per;
+                var d = self.moon.clientWidth;
+                var ml = self.moon.offsetLeft;
+                mr = self.moon.offsetLeft + d;
+                sl = self.sun.offsetLeft;
+                sr = self.sun.offsetLeft + d;
+                if (sl > mr || ml > sr) {//相离
+                    per = 0;
+                } else {//重合
+                    if (sl < ml) {
+                        per = (sr - ml) / d;
+
+                    } else if (mr > sl) {
+                        per = (mr - sl) / d;
+                    }
+
+                }
+                self.change(per)
+            },
+            change: function (per) {
+                var self = this;
+
+                var audio = document.getElementsByTagName('audio')[0];
+                audio.play()
+
+                // per>0?audio.play():audio.pause();
+                audio.volume = per;
+                self.moon.style.background = 'hsl(194, 66%, ' + (1 - per) * 60 + '%)';
+                self.body.style.background = 'hsl(' + (194 + Math.floor(166 + per)) + ', 66%, ' + (1 - per) * 50 + '%)';
+
+
+            }
+        }
+        obj.init()
+
+    </script>
+
+    <!--H5视频、音频不能自动播放,Uncaught (in promise) DOMException
+    1.在浏览器输入： chrome://flags/#autoplay-policy
+    2.在Autoplay policy中将Default改为No user gesture is required
+    3.RELAUNCH NOW -->
+</body>
+
+</html>
