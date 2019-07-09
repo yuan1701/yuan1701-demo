@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>数据类型</title>
+</head>
+<body>
+    <!-- 显式类型转换 -->
+    <!--  JS中有6种数据类型：Undefined、Null、Boolean、Number、String和Object -->
+    <script>
+       console.log(
+            Number(undefined),  //nan
+            Number(null)   ,  //0
+
+            Number(true)   ,  //1
+            Number(false)   ,  //0
+
+            Number('') ,  //0
+            Number(' ') ,  //0
+
+            Number('12') ,  //12
+            Number('012') ,  //12
+            Number('0xff90') ,  //65424
+            Number('5e5'),  //500000
+            Number('k'),  //NaN
+
+            Number({}),  //NaN
+            Number([]),  //0
+            Number(function(){}), //NaN
+            Number(['']),  //0
+            Number([2]) ,  //2
+            Number(['2']) ,  //2
+        )
+
+        /*
+        Number()
+        1.null  0
+        2.undefined NaN
+        3.布尔值  true为1，false为0
+        4.字符串 
+            1、空字符串   0
+            2、非空字符串，并且内容为纯数字（包含进制与科学表示法）转成对应的数字
+            3、其余都是NaN
+        5.数字   数字
+        6.对象  
+            1、对象，函数转成NaN
+            2、空数组转为0，数组里只有一个数据，并且数据能转成数字，则转成对应的数字，其他都转成NaN
+        */
+
+      console.log(
+        String(null), //'null'  
+        String([1,[2]])  ,
+        String(function(){}),
+        String({}),   //[object object]
+      )
+      /*
+      String()
+      1、基本数据类型，null undefined 的结果就是给数据加上引号变成字符串
+      2、对象
+        1、数组的结果为把所有中括号去掉，外面加个引号
+        2、对象的结果为'[object object]',(除了日期对象)
+        3、函数的结果为在函数整体外面加个引号
+      */
+
+        // 转为布尔值
+        console.log( 
+            Boolean(''), //false
+            Boolean(' '), //true
+            Boolean([])  //空数组的布尔值为true
+        )
+        /*
+        Boolean()
+            1、undefined false
+            2、null  false
+            3、数字
+                +0 -0 NaN转布尔值为false，其他都是true
+            4、布尔值  转为对应的值
+            5、字符串
+                空字符串转布尔值的结果为false，其他都为true
+            6、对象转布尔值都是true
+        */
+
+
+
+        /* 三个方法参数为对象的调用原理
+        valueOf返回对象对应的原始值 
+        toString返回对象的字符串表现形式
+        1、数字、字符串、布尔值
+            valueOf  数据本身（原始值形式）
+            toString  数据转成字符串形式
+        2、数组
+            valueOf 数据本身（对象形式）
+            toString 去掉中括号，外面加个引号（本质为调用数组join(',')后的结果）
+        3、函数
+            valueOf  数据本身（对象形式）
+            toString  在函数外面加个引号
+        4、对象
+            valueOf  数据本身（对象形式）
+            toString "[object object]"
+        */
+
+        /* 隐式类型转换数字
+        1.  +  -  *  /   %
+        2.+ -
+        3.某些比较运算符
+        */
+
+
+
+
+
+    
+    
+    </script>
+    
+</body>
+</html>

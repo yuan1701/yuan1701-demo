@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+
+    属性描述符
+
+    元数据：metadata 描述数据的数据
+    属性描述符： 属性的元数据， 本质是一个对象
+
+    1.数据属性： 本质上是一个数据
+    2.存取器属性： 本质是一个函数，当给改属性复制时，会运行相应的函数
+
+
+    <script>
+        var user = {
+            name : 'xxx'
+        }
+        Object.defineProperty(user, 'age', {
+            // PropertyDescriptor 属性描述符
+            get: function(){
+            // 当读取该属性时，实际上会运行该函数，并将该函数的返回值作为属性值
+            return 123;
+            },
+            set:function(){
+                // 当给该属性赋值时，运行该函数，不需要返回值
+                console.log('abc')
+            }
+
+        })
+
+        user.age = 100;//调用set函数
+        console.log( user.age )//
+    
+    
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        /* 1.使用css实现一个持续的动画效果 */
+        .box {
+            width: 200px;
+            height: 200px;
+            background-color: aqua;
+            position: absolute;
+            left: 0;
+            top: 0;
+            animation: test 3s linear 2s infinite;
+        }
+
+        @keyframes test {
+            from {}
+
+            to {
+                width: 50px;
+                height: 50px;
+                background-color: red;
+                opacity: 0.5;
+                left: 500px;
+                top: 500px;
+            }
+        }
+    </style>
+    <script>
+        /* 2.使用js实现一个持续的动画效果 */
+        window.requestAnimFrame = (function () {  //处理兼容
+            return window.requestAnimationFrame ||
+                window.webkitRequestAnimationFrame ||
+                window.mozRequestAnimationFrame ||
+                window.oRequestAnimationFrame ||
+                window.msRequestAnimationFrame ||
+                function (callback) {
+                    window.setTimeout(callback, 1000 / 60);
+                };
+
+        })();
+
+        function repeatOften() {
+            // Do whatever
+            requestAnimationFrame(repeatOften);
+        }
+
+        requestAnimationFrame(repeatOften);
+
+
+
+    </script>
+</head>
+
+<body>
+    <div class="box"></div>
+</body>
+
+
+
+</html>

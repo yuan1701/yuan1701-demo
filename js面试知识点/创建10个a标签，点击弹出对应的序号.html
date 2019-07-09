@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="heard">
+
+    </div>
+
+</body>
+<script>
+
+    var header = document.getElementById("heard");
+    // 第一种
+    for (var i = 0; i < 10; i++) {
+        (function (i) {
+            var a = document.createElement("a");
+            a.innerHTML = i + '<br>';
+            a.addEventListener('click', function () {
+                alert(i)
+            })
+            header.appendChild(a);
+        })(i)
+    }
+    // 第二种
+     for (let i = 0; i < 10; i++) {
+            var a = document.createElement("a");
+            a.innerHTML = i + '<br>';
+            a.addEventListener('click', function () {
+                alert(i)
+            })
+            header.appendChild(a);
+    }
+        
+
+
+    // 加载 JS 时出现Cannot read property 'appendChild' of null错误：获取的节点不存在
+
+
+
+
+
+</script>
+
+</html>

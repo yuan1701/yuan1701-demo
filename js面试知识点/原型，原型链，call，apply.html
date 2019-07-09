@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- 返回字符串字节长度 -->
+    <script>
+        // 1.当前字符为的unicode>255,那么该字符节长度为2
+        // 2.<255，字节为1
+        var str = 'abc啊';
+        function bytesLength(str) {
+            var count = str.length
+            for (var i = 0; i < str.length; i++) {
+                // charCodeAt() 方法可返回指定位置的字符的 Unicode 编码。这个返回值是 0 - 65535 之间的整数。
+                if (str.charCodeAt(i) > 255) {
+                    count++
+                }
+            }
+            return count;
+        }
+
+
+
+
+    </script>
+
+    <!-- 原型
+        1.是function对象的一个属性，定义了构造函数制造出的对象公共的祖先
+        通过该构造函数产生的对象，可以继承该原型的属性和方法  原型也是对象
+        2.利用原型的特点，可以提取共有属性
+        3.对象如何查看原型   隐式属性 __proto__
+        4.对象如何查看对象的构造函数   constructor
+    构造函数是大驼峰式
+    -->
+    <script>
+        // 第一种
+        // Person.prototype.name = 'sunny'
+        // function Person(){
+        // }
+        // var person1 = new Person();
+        // Person.prototype.name = 'chery'
+        // console.log(person1.name)  //chery
+
+        // 第二种
+        Person.prototype.name = 'sunny'
+        function Person() {
+        }
+        var person1 = new Person();
+        Person.prototype = {
+            name: "chery"
+        }
+        console.log(person1.name)  //sunny
+
+
+
+
+
+
+
+
+
+        // 小bug   js精度不准：0.14*100=14.000000000000002
+        // 一般用下面方法解决
+        Math.ceil()//向上取整
+        Math.floor()//向下取整
+        // 可正常计算的范围  前16位，后16位
+
+
+    </script>
+
+    <!-- 2.原型链
+        如何构成原型链
+        2.原型链上属性的增删改查
+        3.绝大多数的对象最终都会继承Object.prototype
+        4. Object.create(原型)
+
+    -->
+    <script>
+        Object.create()
+        //TypeError: Object prototype may only be an Object or null:
+
+    </script>
+    <!--3. call和appl
+
+        JavaScript中的每一个function对象都会有call和apply方法
+        /*apply()方法*/
+        function.apply(thisObj[, argArray])
+        /*call()方法*/
+        function.call(thisObj[, arg1[, arg2[, [,...argN]]]]);
+        作用：
+        1.改变this指向
+   
+
+        区别：
+        call和apply都是调用一个对象的一个方法，用另一个对象替换当前对象。
+        而不同之处在于传递的参数，apply最多只能有两个参数——新this对象和一个数组argArray，如果arg不是数组则会报错TypeError；
+
+        call则可以传递多个参数，第一个参数和apply一样，是用来替换的对象，后边是参数列表。
+    
+    -->
+    <script>
+        function Person(name, age, sex) {
+            this.name = name;
+            this.age = age;
+            this.sex = sex;
+        }
+        function Student(name, age, sex, tell, grade) {
+            Person.call(this, name, age, sex)
+            this.tell = tell;
+            this.grade = grade;
+        }
+        var student = new Student('lili',12,'sex','111111111',12);
+
+    </script>
+</body>
+
+</html>
