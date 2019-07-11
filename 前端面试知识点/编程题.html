@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    /**
+    * 请用您认为最优化的方式，将arr中的type为4的数据过滤出来，
+    * 然后按相同的 name + date（按天）合并value（value累加），
+    * 然后按 value 降序(从大到小)排序，
+    * 最后每行按照 "${name},${本地日期},售出${sum(value)}部" 的格式，如："小米2,2017年06月08日,售出5部", 打印(console.log)出来。
+    * 可以使用第三方js库，可以使用es6。* 请在半小时内完成。
+    */
+    var arr = [{ name: '小米1', value: 1, type: 2, date: '2018-06-07T08:00:01.589Z' },
+    { name: '锤子T1', value: 1, type: 2, date: '2018-06-07T08:10:01.589Z' },
+    { name: '小米2', value: 1, type: 4, date: '2018-06-07T20:00:01.589Z' },
+    { name: '小米2', value: 4, type: 4, date: '2018-06-07T20:10:21.189Z' },
+    { name: '小米4', value: 1, type: 4, date: '2018-06-07T08:00:01.560Z' },
+    { name: '小米4', value: 2, type: 4, date: '2018-06-07T08:10:31.584Z' },
+    { name: '小米6', value: 1, type: 3, date: '2018-06-07T08:00:01.589Z' },
+    { name: '小米5s', value: 1, type: 4, date: '2018-06-07T08:00:01.589Z' },
+    { name: '锤子T2', value: 1, type: 4, date: '2018-06-07T08:00:01.589Z' },
+    { name: '锤子T1', value: 4, type: 4, date: '2018-06-07T08:06:01.589Z' },
+    { name: '魅蓝note5', value: 1, type: 4, date: '2018-06-07T08:00:01.589Z' },
+    { name: '魅蓝note2', value: 5, type: 4, date: '2018-06-02T08:07:01.589Z' },
+    { name: '魅蓝note2', value: 6, type: 4, date: '2018-06-07T08:00:01.589Z' },
+    { name: '魅蓝note3', value: 1, type: 4, date: '2018-06-05T08:00:01.589Z' },
+    { name: '魅蓝note', value: 1, type: 4, date: '2018-06-07T08:00:01.589Z' },
+    { name: 'oppor9', value: 7, type: 4, date: '2018-06-04T08:04:01.588Z' },
+    { name: '华为p9', value: 1, type: 4, date: '2018-06-02T08:00:01.577Z' },
+    { name: '华为p9', value: 2, type: 4, date: '2018-06-07T08:00:01.110Z' },
+    { name: '华为p10', value: 1, type: 1, date: '2018-06-07T08:00:01.534Z' }];
+
+    function printArr(arr) {
+        const result = arr.filter(function (item, index, arr) {
+            item.date = item.date.split("T")[0];
+            return item.type === 4;
+
+        })
+        console.log(result)
+        // filter() 方法创建一个新的数组，新数组中的元素是通过检查指定数组中符合条件的所有元素。
+        // 注意： filter() 不会对空数组进行检测。
+        // 注意： filter() 不会改变原始数组。
+
+
+        const newArr = [];
+        const temp = {};
+        for (const i in result) {
+            const key = `${result[i].name}@${result[i].date}`;
+            if (temp[key]) {
+                temp[key] += result[i].value
+            } else {
+                temp[key] = result[i].value;
+            }
+        }
+        console.log(temp)
+
+        for (const key in temp) {
+            const tempObj = {};
+            tempObj.name = key.split('@')[0];
+            tempObj.date = key.split('@')[1];
+            tempObj.value = temp[key];
+            newArr.push(tempObj);
+        }
+        function compare(prop){
+            return function(a,b){
+                const value1 = a[prop];
+                const value2 = b[prop];
+                return value2-value1;
+            }
+            
+        }
+        newArr.sort(compare('value'))
+        console.log(newArr);
+        // sort()函数,如果调用该方法时没有使用参数，按照字符编码的顺序进行排序。
+        // 如果想按照其他标准进行排序，就需要提供比较函数，该函数要比较两个值，然后返回一个用于说明这两个值的相对顺序的数字。比较函数应该具有两个参数 a 和 b，其返回值如下：
+        // 若 a 小于 b，在排序后的数组中 a 应该出现在 b 之前，则返回一个小于 0 的值。
+        // 若 a 等于 b，则返回 0。
+        // 若 a 大于 b，则返回一个大于 0 的值。
+
+        newArr.forEach(function(item){
+            const printStr = `${item.name},${item.date.split('-')[0]-1}年${item.date.split('-')[1]}月${item.date.split('-')[2]}日,售出${item.value}台`;
+            console.log(printStr)
+
+        })
+
+
+
+
+    }
+    printArr(arr);
+
+
+
+
+
+</script>
+
+</html>
