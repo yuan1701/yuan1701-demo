@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .container {
+            width: 1000px;
+            margin: 0 auto;
+            padding: 0;
+            list-style: none;
+        }
+
+        .container li {
+            overflow: hidden;
+            padding: 10px 0;
+        }
+
+        .container li .cover {
+            float: left;
+            margin: 0 20px;
+        }
+
+        .container li .cover img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .container li h6 {
+            margin: 10px 0;
+        }
+
+        .loading {
+            display: none;
+        }
+
+        .loading p {
+            width: 50px;
+            height: 50px;
+            border: 10px solid #ccc;
+            border-top-color: #666;
+            border-radius: 50%;
+            margin: 0 auto;
+            /* animation: name duration timing-function delay iteration-count direction fill-mode; */
+            animation: rotate 1s linear infinite;
+        }
+
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg)
+            }
+
+            to {
+                transform: rotate(360deg)
+            }
+        }
+
+        .no-data {
+            text-align: center;
+            color: #ddd;
+            display: none
+        }
+    </style>
+</head>
+
+<body>
+    <ul class="container">
+    </ul>
+    <div class="loading">
+        <p></p>
+    </div>
+    <div class="no-data">没有更多信息了...</div>
+
+</body>
+<script>
+    /**
+    *容器
+    */
+    var container = document.querySelector('.container');
+    var loading = document.querySelector('.loading')
+    var noData = document.querySelector('.no-data')
+    var page = 0;//当前页数
+    var hasMoreData = true //是否还有数据
+    var isFetching = false
+
+
+    function createLi(movie) {
+        var li = document.createElement("li");
+        li.innerHTML = `
+        <a href="" class="cover">
+            <img src=${movie.src} alt=""> </a>
+        <h6>${movie.title}</h6>
+        <p>${movie.desc}</p>  `
+        container.appendChild(li)
+
+    }
+
+    function createLis(movies) {
+        for (var i = 0; i < movies.length; i++) {
+            createLi(movies[i]);
+        }
+
+    }
+    var movies = [
+        {
+            src: 'https://img01.sogoucdn.com/v2/thumb/crop/x/0/y/18/w/250/h/166/resize/w/120/h/80/zi/on/iw/90.0/ih/60.0?t=2&url=https%3A%2F%2Fimg.rmhddy.net%2Fyy6080b%2F2019%2F07%2F201902101549777782.jpg&appid=200524&referer=https://www.bbyy1024.net/movie/',
+            title: '什么电影网1',
+            desc: '神马电影网神马电影网不用安装播放器就能免费在线观看的电影网站，手机也可在线观看 5.2 中文字幕1080p 5.8 中文字幕1080p 0.0 国语1080P 5.0 中英字幕 艾 '
+        }, {
+            src: 'https://img01.sogoucdn.com/v2/thumb/crop/x/0/y/18/w/250/h/166/resize/w/120/h/80/zi/on/iw/90.0/ih/60.0?t=2&url=https%3A%2F%2Fimg.rmhddy.net%2Fyy6080b%2F2019%2F07%2F201902101549777782.jpg&appid=200524&referer=https://www.bbyy1024.net/movie/',
+            title: '什么电影网1',
+            desc: '神马电影网神马电影网不用安装播放器就能免费在线观看的电影网站，手机也可在线观看 5.2 中文字幕1080p 5.8 中文字幕1080p 0.0 国语1080P 5.0 中英字幕 艾 '
+        }, {
+            src: 'https://img01.sogoucdn.com/v2/thumb/crop/x/0/y/18/w/250/h/166/resize/w/120/h/80/zi/on/iw/90.0/ih/60.0?t=2&url=https%3A%2F%2Fimg.rmhddy.net%2Fyy6080b%2F2019%2F07%2F201902101549777782.jpg&appid=200524&referer=https://www.bbyy1024.net/movie/',
+            title: '什么电影网1',
+            desc: '神马电影网神马电影网不用安装播放器就能免费在线观看的电影网站，手机也可在线观看 5.2 中文字幕1080p 5.8 中文字幕1080p 0.0 国语1080P 5.0 中英字幕 艾 '
+        }, {
+            src: 'https://img01.sogoucdn.com/v2/thumb/crop/x/0/y/18/w/250/h/166/resize/w/120/h/80/zi/on/iw/90.0/ih/60.0?t=2&url=https%3A%2F%2Fimg.rmhddy.net%2Fyy6080b%2F2019%2F07%2F201902101549777782.jpg&appid=200524&referer=https://www.bbyy1024.net/movie/',
+            title: '什么电影网1',
+            desc: '神马电影网神马电影网不用安装播放器就能免费在线观看的电影网站，手机也可在线观看 5.2 中文字幕1080p 5.8 中文字幕1080p 0.0 国语1080P 5.0 中英字幕 艾 '
+        }, {
+            src: 'https://img01.sogoucdn.com/v2/thumb/crop/x/0/y/18/w/250/h/166/resize/w/120/h/80/zi/on/iw/90.0/ih/60.0?t=2&url=https%3A%2F%2Fimg.rmhddy.net%2Fyy6080b%2F2019%2F07%2F201902101549777782.jpg&appid=200524&referer=https://www.bbyy1024.net/movie/',
+            title: '什么电影网1',
+            desc: '神马电影网神马电影网不用安装播放器就能免费在线观看的电影网站，手机也可在线观看 5.2 中文字幕1080p 5.8 中文字幕1080p 0.0 国语1080P 5.0 中英字幕 艾 '
+        }, {
+            src: 'https://img01.sogoucdn.com/v2/thumb/crop/x/0/y/18/w/250/h/166/resize/w/120/h/80/zi/on/iw/90.0/ih/60.0?t=2&url=https%3A%2F%2Fimg.rmhddy.net%2Fyy6080b%2F2019%2F07%2F201902101549777782.jpg&appid=200524&referer=https://www.bbyy1024.net/movie/',
+            title: '什么电影网1',
+            desc: '神马电影网神马电影网不用安装播放器就能免费在线观看的电影网站，手机也可在线观看 5.2 中文字幕1080p 5.8 中文字幕1080p 0.0 国语1080P 5.0 中英字幕 艾 '
+        }, {
+            src: 'https://img01.sogoucdn.com/v2/thumb/crop/x/0/y/18/w/250/h/166/resize/w/120/h/80/zi/on/iw/90.0/ih/60.0?t=2&url=https%3A%2F%2Fimg.rmhddy.net%2Fyy6080b%2F2019%2F07%2F201902101549777782.jpg&appid=200524&referer=https://www.bbyy1024.net/movie/',
+            title: '什么电影网1',
+            desc: '神马电影网神马电影网不用安装播放器就能免费在线观看的电影网站，手机也可在线观看 5.2 中文字幕1080p 5.8 中文字幕1080p 0.0 国语1080P 5.0 中英字幕 艾 '
+        }, {
+            src: 'https://img01.sogoucdn.com/v2/thumb/crop/x/0/y/18/w/250/h/166/resize/w/120/h/80/zi/on/iw/90.0/ih/60.0?t=2&url=https%3A%2F%2Fimg.rmhddy.net%2Fyy6080b%2F2019%2F07%2F201902101549777782.jpg&appid=200524&referer=https://www.bbyy1024.net/movie/',
+            title: '什么电影网1',
+            desc: '神马电影网神马电影网不用安装播放器就能免费在线观看的电影网站，手机也可在线观看 5.2 中文字幕1080p 5.8 中文字幕1080p 0.0 国语1080P 5.0 中英字幕 艾 '
+        }, {
+            src: 'https://img01.sogoucdn.com/v2/thumb/crop/x/0/y/18/w/250/h/166/resize/w/120/h/80/zi/on/iw/90.0/ih/60.0?t=2&url=https%3A%2F%2Fimg.rmhddy.net%2Fyy6080b%2F2019%2F07%2F201902101549777782.jpg&appid=200524&referer=https://www.bbyy1024.net/movie/',
+            title: '什么电影网1',
+            desc: '神马电影网神马电影网不用安装播放器就能免费在线观看的电影网站，手机也可在线观看 5.2 中文字幕1080p 5.8 中文字幕1080p 0.0 国语1080P 5.0 中英字幕 艾 '
+        }]
+
+    createLis(movies)
+
+    /**
+    *获取电影数组
+    */
+    function fetchDatas(callback) {
+        setTimeout(function () {
+            page++;
+            if (page === 6) {
+                // 模拟没有数据
+                callback([]);
+                return;
+            }
+            // 1s拿到电影数据
+            var movieData = [];
+            callback(movieData)
+        }, 1000)
+
+    }
+    fetchDatas(function (movies) {
+        console.log(movies);
+    })
+    // 获取更多电影
+    function getMoreMovie() {
+        if (!hasMoreData) {
+            // 没有数据了
+            return;
+        }
+        // 转圈圈
+        loading.style.display = 'block';
+        fetchDatas(function (movies) {
+            createLis(movies);
+            // 不转圈圈
+            loading.style.display = 'none';
+            // 如果没有拿到数据
+            if(movies.length === 0){
+                hasMoreData = false;//标记没有数据
+                noData.style.display = 'block'
+            }
+            isFetching = false;
+
+        })
+
+    }
+
+
+    getMoreMovie();
+
+    // 注册滚动条事件
+    window.onscroll = function () {
+        var bottom = document.documentElement.scrollHeight - document.documentElement.scrollTop-document.documentElement.clientHeight
+        console.log(bottom)
+    }
+
+
+
+
+</script>
+
+</html>
