@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- 移动端 -->
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Document</title>
+    <style>
+        ul {
+            display: flex;
+            flex-direction: row;
+            /* 默认值 */
+            list-style: none;
+            margin: 0 auto;
+            background: green;
+            width: 80%;
+        }
+
+        li {
+            flex: 1;
+            /*平均父元素的宽度*/
+            /* text-align: center; */
+            line-height: 100px;
+        }
+
+        .demo {
+            display: flex;
+            justify-content: space-around;
+            background: red;
+            width: 80%;
+            margin: 10px auto;
+        }
+
+        .left {
+            width: 200px;
+            height: 100px;
+            background: #d4cdcd;
+        }
+
+        .right {
+            width: 380px;
+            height: 200px;
+
+        }
+
+        .btn {
+            background: blue;
+            width: 100px;
+            color: white;
+            text-align: center;
+            margin: 20px;
+        }
+
+        .page-body{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            align-items: flex-start;
+            font-size: 5vw;/*1vm=视口宽*1%*/
+            flex-wrap: wrap;/*换行*/
+        }
+        .page-item{
+         
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .page-item img{
+            width: 8em;
+            /* 注意父元素用vm */
+            /* 父容器的font-size的大小*8 */
+
+            /* height: 8em; */
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- flex-direction: column/row;
+        justify-content: flex-start /flex-end / center space-between /space-around;
+        align-items: flex-end / -->
+
+    <!-- 
+            px
+            rpx  (wechat)
+            rem  root（font-size）
+            em  父元素 （font-size）
+            vw  viewport width
+            vh  viewport width
+
+         -->
+         <!-- 作业
+            
+        
+        
+        -->
+
+    <ul>
+        <li>音乐</li>
+        <li>影视</li>
+        <li>音乐</li>
+        <li>影视</li>
+        <li>音乐</li>
+    </ul>
+    <div class="demo" style="display: none">
+        <div class="left"></div>
+        <div class="right">
+            <p>Ipone 7 PLUE xxxx</p>
+            <span>总人数999</span>
+            <span>剩余人数333</span>
+            <div class="btn">立即参与</div>
+        </div>
+
+    </div>
+
+    <div class="page-body">
+        <div class="page-item">
+            <img src="https://gss0.bdstatic.com/-4o3dSag_xI4khGkpoWK1HF6hhy/baike/w%3D268%3Bg%3D0/sign=65024af55efbb2fb342b5f1477714799/c8177f3e6709c93d4c234c5f943df8dcd0005440.jpg" alt="">
+            <span>薛子谦</span>
+            <span>哑巴</span>
+        </div>
+        <div class="page-item">
+            <img src="https://gss0.bdstatic.com/-4o3dSag_xI4khGkpoWK1HF6hhy/baike/w%3D268%3Bg%3D0/sign=65024af55efbb2fb342b5f1477714799/c8177f3e6709c93d4c234c5f943df8dcd0005440.jpg" alt="">
+            <span>薛子谦</span>
+            <span>哑巴</span>
+        </div>
+        <div class="page-item">
+            <img src="https://gss0.bdstatic.com/-4o3dSag_xI4khGkpoWK1HF6hhy/baike/w%3D268%3Bg%3D0/sign=65024af55efbb2fb342b5f1477714799/c8177f3e6709c93d4c234c5f943df8dcd0005440.jpg" alt="">
+            <span>薛子谦</span>
+            <span>哑巴</span>
+        </div>
+        <div class="page-item">
+            <img src="https://gss0.bdstatic.com/-4o3dSag_xI4khGkpoWK1HF6hhy/baike/w%3D268%3Bg%3D0/sign=65024af55efbb2fb342b5f1477714799/c8177f3e6709c93d4c234c5f943df8dcd0005440.jpg" alt="">
+            <span>薛子谦</span>
+            <span>哑巴</span>
+        </div>
+    </div>
+
+</body>
+
+</html>
