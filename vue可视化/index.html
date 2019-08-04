@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue可视化</title>
+    <script type="text/javascript" src='echarts.min.js'></script>
+</head>
+
+<body>
+    <div id="chart" style="width: 400px;height:400px"></div>
+
+</body>
+<script>
+    // 初始化图表标签  
+    var myChart = echarts.init(document.getElementById('chart'))
+    console.log(myChart, 1)
+    var options = {
+        title: {
+            text: '测试成绩'
+        },
+        legend: {
+            data: ['分数']
+        },
+        //X轴设置
+        xAxis: {
+            data: ['60分', '70分', '80分', '90分', '100分']
+        },
+        yAxis: {
+        },
+        //name=legend.data的时候才能显示图例
+        series: [{
+            name: '分数',
+            // bar柱状 pie饼状
+            type: 'pie',
+            data: ['12', '32', '77', '21', '1']
+        }]
+    };
+    // setOption
+    myChart.setOption(options);
+
+
+
+</script>
+
+</html>

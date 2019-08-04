@@ -50,7 +50,73 @@
     })
 
     3. 使用组件 <my-component></my-component> 。
+2-2.自定义组件的步骤？
+
+    // 注册一个全局自定义指令 `v-focus`
+    Vue.directive('focus', {
+        // 当被绑定的元素插入到 DOM 中时……
+        inserted: function (el) {
+            // 聚焦元素
+            el.focus()
+        }
+    })
+    如果想注册局部指令，组件中也接受一个 directives 的选项：
+
+    directives: {
+        focus: {
+            // 指令的定义
+            inserted: function (el) {
+                el.focus()
+            }
+        }
+    }
+    然后你可以在模板中任何元素上使用新的 v-focus 属性，如下：
+    <input v-focus>
+2-3.自定义过滤器
+    使用：双花括号插值和 v-bind 表达式 (后者从 2.1.0+ 开始支持)。过滤器应该被添加在 JavaScript 表达式的尾部，由“管道”符号指示：
+
+    <!-- 在双花括号中 -->
+    {{ message | capitalize }}
+
+    <!-- 在 `v-bind` 中 -->
+    <div v-bind:id="rawId | formatId"></div>
+    你可以在一个组件的选项中定义本地的过滤器：
+
+    filters: {
+        capitalize: function (value) {
+            if (!value) return ''
+            value = value.toString()
+            return value.charAt(0).toUpperCase() + value.slice(1)
+        }
+    }
+    或者在创建 Vue 实例之前全局定义过滤器：
+
+    Vue.filter('capitalize', function (value) {
+        if (!value) return ''
+        value = value.toString()
+        return value.charAt(0).toUpperCase() + value.slice(1)
+    })
+
+    new Vue({
+    // ...
+    })
+
+2-3.浅谈单页面和多页面应用的区别
+        何为多页面？多页多页就是应用有多个页面。
+        何为单页面？单页单页就是应用有单个主界面。
+        单页面                              	多页面
+        组成：一个外壳页面和多个页面片段组成	组成：多个完整页面组成，记得是完整页面
+        css、js等资源：共用。只在外壳部分加载	css、js等资源：不共用。加载一个页面就去加载对应的资源
+        url模式：a.com/#/pageone a.com/#/pagetwo	url模式：a.com/pageone.html a.com/pagetwo.html
+        刷新方式：局部刷新                   	  刷新方式：整页刷新
+        用户体验：页面切换速度快，用户体验较好	    用户体验：页面切换速度慢，影响用户体验。
+        数据传递：容易                       	  数据传递：依赖 url传参、或者cookie 、localStorage等
+        搜索引擎优化：	需要单独方案做，有点麻烦	 搜索引擎优化：比较容易
+        开发成本：较高，需要专业的框架           	开发成本：较低，但重复代码多
+        维护成本：相对容易	                       维护成本：相对复杂
  
+
+
 3-1. Vue 生命周期的作用是什么？
     生命周期中有多个事件钩子，让我们在控制整个 Vue 实例的过程时更容易形成好的逻辑。
 3-2. 什么是 Vue 生命周期？
@@ -74,6 +140,163 @@
 3-6. Vue 获取数据在哪个周期函数？
     一般在 created（或 beforeRouter）里面就可以，如果涉及到需要页面加载完成之后的话就用 mounted。
 3-7. $nextTick 的使用？
+    $nextTick目的就是把传进来的函数延迟到dom更新后再使用，所以这里依次优雅降序的使用js的方法来做到这一点。
+
+3-8. computed 计算属性的用法？与 watch、methods 的区别？分别简述 computed 和  watch 的使用场景？
+
+
+
+3-9. Vue.set 视图更新？
+
+3-10.如何让 CSS 只在当前组件中起作用？
+    将当前组件的修改为 <style scoped> 。
+3-11. v-show 和 v-if 指令的共同点和不同点？
+    v-show 指令是通过修改元素的 display 的 CSS 属性让其显示或者隐藏。
+    v-if 指令是直接销毁和重建 DOM 达到让元素显示和隐藏的效果。
+3-12. v-if 和 v-for 的优先级？
+    当 v-if 与 v-for 一起使用时，v-for 具有比 v-if 更高的优先级。
+3-13. 说出几种 vue 当中的指令和它的用法？
+    v-if：判断是否隐藏；
+    v-for：数据循环；
+    v-bind:class：绑定一个属性；
+    v-model：实现双向绑定。
+    v-once: 如果只想执行一次性地插值，当数据改变时，插值处的内容不会更新
+<span v-once> 这个将不会改变 : {{ msg }}</span>
+3-14. 为什么使用 key？
+    当有相同标签名的元素切换时，需要通过 key 特性设置唯一的值来标记以让 Vue 区分它们，否则 Vue 为了效率只会替换相同标签内部的内容。
+3-15. 列举常用的指令？
+    文本插值：{{}} Mustache；
+    DOM 属性绑定：v-bind；
+    指令绑定一个事件监听器：v-on；
+    实现表单输入和应用状态之间的双向绑定：v-model；
+    控制切换一个元素的显示：v-if 和 v-else；
+    列表渲染：v-for；
+    根据条件展示元素：v-show。
+3-16. vue 组件中 data 为什么必须是一个函数？
+3-17. vue 的两个核心点？
+3-18. 如何获取 DOM？
+    Vue.js 最核心的功能有两个，一是响应式的数据绑定系统，二是组件系统。
+3-19. Vue 父组件向子组件传递数据？
+    1. 父组件将数据绑定在子组件上
+
+    <template>
+        <transition name="slide">
+            <music-list :songs="songs" :title="title" :bg-image="bgImage"></music-list>
+        </transition>
+    </template>
+
+    2. 子组件接受数据 props
+
+    export default {
+        props: {
+            bgImage: {
+                type: String,
+                default: ""
+            },
+            songs: {
+                type: Array,
+                default: () => []
+            },
+            title: {
+                type: String,
+                default: ""
+            }
+        }
+    }
+
+
+2. 子组件像父组件传递事件？
+    在子组件里用 $emit 向父组件触发一个事件，父组件监听这个事件就行了。
+
+    父组件：
+    <template>
+    <div>
+        <child @fatherMethod="fatherMethod"></child>
+    </div>
+    </template>
+    <script>
+    import child from "~/components/dam/child";
+    export default {
+        components: {
+        child
+        },
+        methods: {
+        fatherMethod() {
+            console.log("测试");
+        }
+        }
+    };
+    </script>
+
+    子组件：
+
+    <template>
+    <div>
+        <button @click="childMethod()">点击</button>
+    </div>
+    </template>
+    <script>
+    export default {
+        methods: {
+        childMethod() {
+            this.$emit("fatherMethod");
+        }
+        }
+    };
+    </script>
+
+3. 跨组件双向数据绑定？
+组件间的通信?
+    直接的父子关系：
+        父组件向子组件传递数据通过 prop 传递；
+        子组件传递数据给父组件通过 $emit 触发事件；
+        父组件通过 ref 直接访问子组件实例的属性和方法；
+        通过 $parent/$children：访问父/子实例。
+
+    祖孙关系：
+        $attrs 和 $listeners；
+        利用 provide/inject，向所有子孙后代注入依赖；
+        $boradcast 和 $dispatch。
+
+    没有直接关系：
+        借助于中央事件总线 event bus 进行通讯；
+        利用 vuex 进行通讯；
+        利用 cookie 和 localstorage 进行通讯；
+        利用 session 进行通讯。
+
+
+
+路由：
+4-1. Vue-router 跳转和 location.href 有什么区别？
+    location.href ： 对比 <a>，Link 组件避免了不必要的重渲染。
+    Vue-router只更新变化的部分，从而减少 DOM 性能消耗。
+4-2. Vue 里面 router-link 在电脑上有用，在安卓上没反应怎么解决？
+    Vue 路由在 Android 机上有问题，babel 问题，安装 babel polypill 插件解决。
+4-3. Vue2 中注册在 router-link 上事件无效解决方法？
+    如何解决：
+    <router-link  @click.native="change"><span>{{item.text}}</span></router-link>
+
+    只需要在 @click 后面加上 native 就可以了。
+4-4. RouterLink 在 IE 和 Firefox 中不起作用（路由不跳转）的问题？
+4-5.请说出 Vue.cli 项目中 src 目录每个文件夹和文件的用法？
+
+    assets 文件夹是放静态资源；
+    components 是放组件；
+    router 是定义路由相关的配置；
+    app.vue 是一个应用主组件；
+    main.js 是入口文件。
+
+
+我的问题记录:
+ vue的：@ v-on都是干嘛滴   
+ 指令 (Directives) 是带有 v- 前缀的特殊属性。指令的职责是，当表达式的值改变时，将
+其产生的连带影响，响应式地作用于 DOM 。一些指令能够接收一个“ ” 参数 ，在指令名称
+之后以冒号表示。
+ v-bind 指令可以用于响应式地更新 HTML 属性，简写形式为 ":"
+ v-on 指令用于监听 DOM 事件，参数为事件名称，引号内为绑定的事件处理函数或者是Javascript 代码（不推荐）。简写形式为 "@"
+
+ vuex是什么
+ $el,
 
 
 

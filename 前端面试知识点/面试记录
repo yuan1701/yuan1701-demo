@@ -1,9 +1,28 @@
-2012实验室
+第一次面试题
 vue构建打包流程，命令
 生命周期
 双向数据绑定，数据改变页面不发生改变
 如何自定义指令
 如何给一个button加多个功能
 跨域的几种解决方法
-cs3动画实现一个动画加载过程
+css3动画属性
 js冒泡的排序原理和时间复杂度O(n*n)
+cookie,localstarge,session的区别
+第二次面试题
+vue状态管理
+    使用vuex来保存我们需要管理的状态值，值一旦被修改，所有引用该值的地方就会自动更新，
+    vue init webpack web（使用webpack创建一个项目名为web的项目）；
+    npm install vuex --save
+css盒模型
+angular和vue的比较
+es6特性
+vue实现数据可视化：
+    Echarts  
+    步骤：一、安装插件    cnpm install echarts -D
+    注：echarts 也不能通过 Vue.use() 进行全局调用所以，通常在需要使用图表的 .vue文件中直接引入
+    import echarts from 'echarts'
+    也可以在main.js中引入，然后修改原型链
+    Vue.prototype.$echarts = echarts
+    这样在全局中就可以直接使用了
+    let mychart = this.$echarts.init(document.getElementById('mychart'))
+ 

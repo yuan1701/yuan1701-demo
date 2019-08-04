@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://d3js.org/d3.v3.min.js"></script>
+    <script src="./build/nv.d3.js"></script>
+    <!-- <script src="./build/nv.d3.min.js"></script> -->
+    <link rel="stylesheet" href="./build/nv.d3.css">
+    <style>
+        .content {
+            width: 1200px;
+            height: 100px auto;
+        }
+
+        #chart {
+            width: 300px;
+            height: 300px;
+            float: left;
+            margin-right: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="content">
+        <div id="chart">
+            <svg></svg>
+        </div>
+
+    </div>
+</body>
+<script>
+    nv.addGraph(function () {
+        var chart = nv.models.pieChart()
+            .x(d => d.label)
+            .y(d => d.value)
+            // .tooltipContent(function (key, y, e, graph) {
+            //     return '<span>' + y + ' Children</span>';
+            // })//提示信息内容和数据.报错了没找见为甚m
+           
+            .valueFormat(d3.format(',.0f'))//数据格式
+            // .color(["#ded", "#123", "#345", "#fef"])//改变颜色的接口
+            .showLabels(false)//显示标签
+            // .tooltips(false)//提示不显示  报错，
+            .showLegend(true)//右上角说明
+            
+        // chart.width(400);//图表大小
+        chart.title('stuff')
+        .titleOffset(-10);
+        chart.options({ height: 300, donut: true });
+
+        d3.select("#chart svg")
+            .datum(data()).transition().duration(350).call(chart)
+        return chart
+    })
+
+    function data() {
+        return [{
+            "label": 'a',
+            "value": 22.00
+        },
+        {
+            "label": 'One',
+            "value": 22
+        },
+        {
+            "label": 'c',
+            "value": 22
+        },
+        {
+            "label": 'a',
+            "value": 22
+        }]
+    }
+
+
+</script>
+
+</html>
