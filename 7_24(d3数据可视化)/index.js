@@ -1,5 +1,5 @@
 var data = [90, 86, 168, 281, 303, 800];
-
+//v5版本的linear() is not function
 var scale = d3.scale.linear()
   .domain([0, d3.max(data)])
   .range([0, 300])
