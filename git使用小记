@@ -35,6 +35,16 @@ git commit -a -m "XXX"(添加文件到仓库 git add *    git commit -m "描述"
 10.查看仓库状态:git status
 11.代码上传
 git push yuanyun dev(push之前先pull)
+
+git使用 :
+git stash   暂存文件
+git fetch origin master 将远程主机的最新内容拉到本地
+git rebase origin/master  master  合并多次提交纪录
+git stash pop  取出暂存的文件
+git commit 
+git push
+
+
 解决冲突的方法:
     1.删除本地分支  git branch -D +本地分支
     2.删除远端分支  git push yuanyun --delete +远端分支 
@@ -48,7 +58,6 @@ git push yuanyun dev(push之前先pull)
 2.git工具：TortoiseGit-2.2.0.0-64bit.msi 和 TortoiseGit-LanguagePack-2.2.0.0-64bit-zh_CN
 3.配置ssh key:
     第一步：控制台输入ssh-keygen -t rsa -C "youremail@exam--listple.com"生成id_rsa和id_rsa.pub将id_rsa.pub内容添加到ssh秘钥。
-    详见：https://www.aliyun.com/jiaocheng/386355.html
     在github个人中心的设置setting界面，找到SSH and GPS keys菜单，或者直接访问https://github.com/setting/keys
     页面中点击new ssh key，添加即可。
 
@@ -59,7 +68,7 @@ $git config --global http.sslVerify false
 3.git连接超时443-timeout 查看“c:\windows\system32\drivers\etc\host”，注意这个文件一定是在系统盘，
 host文件代理Hosts文件主要作用是定义IP地址和主机名的映射关系，是一个映射IP地址和主机名的规定。
 当用户在浏览器中输入一个需要登录的网址时，系统会首先自动从Hosts文件中寻找对应的IP地址。
-1.下载安装git 初始化仓库git init
+4.频繁提示输入账号密码git config --global credential.helper store
 
 
 npm使用
