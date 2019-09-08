@@ -1,4 +1,24 @@
-vue的长按事件: v-longpress:native="onLongClickListener"
+1.vue的长按事件: v-longpress:native="onLongClickListener"
+2.页面跳转 window.location.href=''
+3.flex:1的用法：
+  左边自适应，右边固定
+  body{ display: flex; flex-flow: row;} #left{ flex:1; } #right{ width: 100px; }
+4.背景图片加渐变蒙层撑满：background: linear-gradient(to bottom,rgba(0,0,0,0),rgba(0,0,0,0.5)),url('+ selectedImgs +') no-repeat center/cover;
+5.修改input的placeholder默认样式：
+        input::-webkit-input-placeholder{
+            color:red;
+        }
+        input::-moz-placeholder{   /* Mozilla Firefox 19+ */
+            color:red;
+        }
+        input:-moz-placeholder{    /* Mozilla Firefox 4 to 18 */
+            color:red;
+        }
+        input:-ms-input-placeholder{  /* Internet Explorer 10-11 */ 
+            color:red;
+        }
+6.
+
 问题：
 1.阿里巴巴图标库iconfont上传svg后，显示不了图片
   失败的原因：是一些特殊的svg属性 fill="none" iconfont暂不支持解析
