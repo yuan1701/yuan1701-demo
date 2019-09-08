@@ -1,0 +1,9 @@
+vue的长按事件: v-longpress:native="onLongClickListener"
+问题：
+1.阿里巴巴图标库iconfont上传svg后，显示不了图片
+  失败的原因：是一些特殊的svg属性 fill="none" iconfont暂不支持解析
+  解决方法是：
+    将 svg 在 AI 软件里打开，选择上方 对象 - 扩展 - 勾选描边 - 确定；
+    存储为 svg 格式，弹框中选择 svg1.1, 无使用系统字体，嵌入，确定；
+    在上传 svg 至 iconfont 或者 iconmoon 网站就可以显示出来了，并且可以成功下载生成后的字体
+  
