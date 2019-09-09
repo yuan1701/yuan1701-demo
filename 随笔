@@ -17,7 +17,21 @@
         input:-ms-input-placeholder{  /* Internet Explorer 10-11 */ 
             color:red;
         }
-6.
+6.如何在vue项目中使用icomoon？
+  1.修改.css中fonts的目录
+  2.安装loader
+  3.在webpackage中配置
+  解决方法：
+    npm install css-loader style-loader url-loader
+    并在rules里添加 {
+
+          test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
+          loader: 'url-loader',
+          options: {
+            limit: 1000, // 1 KO
+            name: 'fonts/[name].[hash:7].[ext]'
+          }
+        },
 
 问题：
 1.阿里巴巴图标库iconfont上传svg后，显示不了图片
