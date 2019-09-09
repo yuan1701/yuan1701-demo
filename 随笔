@@ -50,5 +50,6 @@
     
     
  1.图片撑满背景：background-size:100% 100%;
+ 2.<img src='_'></img>
  
   
