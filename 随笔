@@ -50,6 +50,7 @@
     
     
  1.图片撑满背景：background-size:100% 100%;
- 2.<img src='_'></img>
+ 2.<img src='_'></img>会显示出一个border
+ 3.
  
   
