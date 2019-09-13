@@ -2,6 +2,8 @@ git使用：
 0.git init初始化一个仓库
 1.clone文件
 git clone git@xxx.git
+git clone -b [分支] git@xxx.git  基于某个分支下载代码
+
 2.进入文件执行
 git remote  -v
 git remote add origin git@xxx.git
@@ -41,8 +43,11 @@ git stash   暂存文件
 git fetch origin master 将远程主机的最新内容拉到本地
 git rebase origin/master  master  合并多次提交纪录
 git stash pop  取出暂存的文件
-git commit 
-git push
+git commit -m 'commint desc'
+git push origin master 提交代码
+git log 查看代码提交记
+git diff 对比代码修改
+git status 查看代码状态
 
 
 解决冲突的方法:
