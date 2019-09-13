@@ -49,6 +49,11 @@ git log 查看代码提交记
 git diff 对比代码修改
 git status 查看代码状态
 
+git diff、git diff --cached、git diff HEAD 区别:
+    git diff ： 对比工作区(未 git add)和暂存区(git add 之后)
+    git diff --cached: 对比暂存区(git add 之后)和版本库(git commit 之后)
+    git diff HEAD: 对比工作区(未 git add)和版本库(git commit 之后)
+
 
 解决冲突的方法:
     1.删除本地分支  git branch -D +本地分支
